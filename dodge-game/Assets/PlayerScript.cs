@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    //Speed
+  
     public float speed = 15f;
+    public float mapWidth = 5f; 
 
     //Rigibody access 
     private Rigidbody2D rb;
@@ -20,7 +21,11 @@ public class PlayerScript : MonoBehaviour
     {
         float x = Input.GetAxis("Horizontal")* Time.fixedDeltaTime * speed; //GetAxisRaw for no smoothing. 
 
-        rb.MovePosition(rb.position + Vector2.right * x); //Vector2.right 0y 1x *x = movement
+        Vector2 newPosition = rb.position + Vector2.right * x;//Vector2.right 0y 1x *x = movement. 
+
+        newPosition.x = Mathf.Clamp(newPosition.x, - mapWidth, mapWidth);
+
+        rb.MovePosition(newPosition); 
 
 
     } 

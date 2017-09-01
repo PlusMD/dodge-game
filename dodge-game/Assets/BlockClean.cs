@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class BlockClean : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
 	// Update is called once per frame
 	void Update () {
-		
+		if(transform.position.y < -2f)
+		{
+		    Destroy(gameObject); 
+		}
 	}
 }

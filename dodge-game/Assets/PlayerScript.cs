@@ -28,5 +28,11 @@ public class PlayerScript : MonoBehaviour
         rb.MovePosition(newPosition); 
 
 
-    } 
+    }
+
+    void OnCollisionEnter2D()
+    {
+        Debug.Log("hit");
+        FindObjectOfType<GameManager>().EndGame(); 
+    }
 }

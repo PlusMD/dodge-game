@@ -7,9 +7,22 @@ public class Spawner : MonoBehaviour
 
     public Transform[] spawnPoints;
 
-    public GameObject blockPrefab; 
+    public GameObject blockPrefab;
 
-	void Start ()
+    private float spawnTimer = 2f;
+    public float waveTimer = 1f; 
+
+    void Update()
+    {
+        if (Time.time >= spawnTimer)
+        {
+            spawnBlocks();
+            spawnTimer = Time.time + waveTimer; 
+        }
+    }
+
+
+	void spawnBlocks ()
 	{
 
 	    int randomIndex = Random.Range(0, spawnPoints.Length);

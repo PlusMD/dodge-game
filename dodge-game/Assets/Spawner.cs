@@ -10,14 +10,17 @@ public class Spawner : MonoBehaviour
     public GameObject blockPrefab;
 
     private float spawnTimer = 2f;
-    public float waveTimer = 1f; 
+    public float waveTimer = 1f;
+
+    public float waveScore = 0f; 
 
     void Update()
     {
         if (Time.time >= spawnTimer)
         {
             spawnBlocks();
-            spawnTimer = Time.time + waveTimer; 
+            spawnTimer = Time.time + waveTimer;
+            waveScore += 1; 
         }
     }
 

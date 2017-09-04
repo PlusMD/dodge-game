@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
-  
+
+    public bool hit = false; 
     public float speed = 15f;
-    public float mapWidth = 5f; 
+    public float mapWidth = 5f;
+   //public Text scoreText;
 
     //Rigibody access 
     private Rigidbody2D rb;
@@ -25,14 +29,25 @@ public class PlayerScript : MonoBehaviour
 
         newPosition.x = Mathf.Clamp(newPosition.x, - mapWidth, mapWidth);
 
-        rb.MovePosition(newPosition); 
+        rb.MovePosition(newPosition);
+        hit = false; 
 
 
     }
 
+   // void OnCollisionEnter2D()
+   // {
+     //   Debug.Log("hit");
+    //    FindObjectOfType<GameManager>().EndGame();
+    //    hit = true; 
+        //blockCollider.enabled = false;
+   // }
+
     void OnCollisionEnter2D()
     {
+        hit = true;
         Debug.Log("hit");
-        FindObjectOfType<GameManager>().EndGame(); 
+        FindObjectOfType<GameManager>().EndGame();
+       
     }
 }

@@ -9,15 +9,16 @@ public class Score : MonoBehaviour
     public float score = -1f;
     public float currentScore; 
     public Text scoreText;
-    public static bool playerReallyHit = false; 
 
-    private PlayerScript playerHit;
+   //private PlayerScript playerHit;
 
     void Start()
     {
-        playerHit = GameObject.Find("Player").GetComponent<PlayerScript>();
+        //Start the game with the text displaying 0
         scoreText.text = "0";
-        playerHit.hit = false; 
+
+        //playerHit = GameObject.Find("Player").GetComponent<PlayerScript>();
+        //playerHit.hit = false; 
 
     }
 
@@ -26,21 +27,24 @@ public class Score : MonoBehaviour
 
     void OnTriggerEnter2D()
     {
+        //When a block hits the score point add score
         if (GameObject.FindWithTag("Block"))
         {
             score += 0.333333333f;  
             Debug.Log("HITTTTT");
+            //Run update score
             UpdateScore();
         }
     }
 
     void UpdateScore()
     {
+        //Makes sure no minus scores can display
         if (score <= -1)
         {
             score = 0;
         }
-
+        //Round the score to ensure no .333 scores show when hitting a block.
         scoreText.text = "" +Mathf.Round(score);
     }
 }

@@ -7,8 +7,16 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour
 {
     public bool hit = false; 
-    public float speed = 15f;
-    public float mapWidth = 5f;
+  //  public float speed = 15f;
+  //  public float mapWidth = 5f;
+
+    public int laneNumber = 0;
+    public int lanesCount = 4;
+    bool didChangeLastFrame = false;
+    public float laneDistance = 1;
+    public float firstLaneXPos = 0;
+    public float deadZone = 0.1f;
+    public float sideSpeed = 5;
 
     //Rigibody access 
     private Rigidbody2D rb;
@@ -20,15 +28,32 @@ public class PlayerScript : MonoBehaviour
     }
 
     //Fixed keyboard movement
-    void FixedUpdate()
+    void Update()
     {
-        float x = Input.GetAxis("Horizontal")* Time.fixedDeltaTime * speed; //GetAxisRaw for no smoothing. 
+    
+            //"Horizontal" is a default input axis set to arrow keys and A/D
+            //We want to check whether it is less than the deadZone instead of whether it's equal to zero 
+            float input = Input.GetAxis("Horizontal");
+            if (Mathf.Abs(input) > deadZone)
+            {
+                if (!didChangeLastFrame)
+                {
+                    didChangeLastFrame = true; //Prevent overshooting lanes
+                    laneNumber += Mathf.RoundToInt(Mathf.Sign(input));
+                    if (laneNumber < 0) laneNumber = 0;
+                    else if (laneNumber >= lanesCount) laneNumber = lanesCount - 1;
+                }
+            }
+            else
+            {
+                didChangeLastFrame = false;
+                //The user hasn't pressed a direction this frame, so allow changing directions next frame.
+            }
 
-        Vector2 newPosition = rb.position + Vector2.right * x;//Vector2.right 0y 1x *x = movement. 
+            Vector3 pos = transform.position;
+            pos.x = Mathf.Lerp(pos.x, firstLaneXPos + laneDistance * laneNumber, Time.deltaTime * sideSpeed);
+            transform.position = pos;
 
-        newPosition.x = Mathf.Clamp(newPosition.x, - mapWidth, mapWidth);
-
-        rb.MovePosition(newPosition);
         hit = false; 
 
 

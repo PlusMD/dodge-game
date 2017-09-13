@@ -20,6 +20,7 @@ public class SwipeTest : MonoBehaviour
             newPos += Vector3.right;
         }
 
-        player.transform.position = Vector3.MoveTowards(player.transform.position, newPos, 3f * Time.deltaTime); 
+        player.transform.position = Vector3.MoveTowards(player.transform.position, newPos, 5f * Time.deltaTime);
+
     }
 }

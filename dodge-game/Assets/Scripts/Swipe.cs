@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.UI;
+
+//using Debug = System.Diagnostics.Debug;
 
 public class Swipe : MonoBehaviour
 {
@@ -18,6 +22,7 @@ public class Swipe : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log("MOUSE WORKS ");
             tap = true;
             isDrag = true; 
             touchStart = Input.mousePosition;
@@ -57,11 +62,12 @@ public class Swipe : MonoBehaviour
         //CALC DISTANCE 
         swipeDelta = Vector2.zero;
       
-        if (isDrag)
+        if (isDrag == true)
         {
             if (Input.touches.Length > 0)
             {
                 swipeDelta = Input.touches[0].position - touchStart;
+                Debug.Log("This swipe worked");
             }
             else if (Input.GetMouseButtonDown(0))
             {
@@ -95,9 +101,13 @@ public class Swipe : MonoBehaviour
     }
 
 
-
     public Vector2 SwipeDelta {
         get { return swipeDelta; }
+    }
+
+    public bool Tap
+    {
+        get { return tap; }
     }
 
     public bool SwipeLeft { 
